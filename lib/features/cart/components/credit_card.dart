@@ -12,7 +12,7 @@ class Credit_Card extends StatefulWidget {
       required this.bgColor});
   bool isVisa;
   int cardNumber;
-  Color bgColor;
+  Color bgColor; 
   @override
   State<Credit_Card> createState() => _Credit_CardState();
 }
@@ -38,7 +38,7 @@ class _Credit_CardState extends State<Credit_Card> {
               children: [
                 Text("${widget.isVisa ? "Visa" : "MasterCard"}"),
                 verticalSpace(5),
-                Text("****1537")
+                Text("****1567")
               ],
             )
           ],

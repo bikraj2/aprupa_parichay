@@ -8,22 +8,24 @@ import 'package:flutter/material.dart';
 // Visa Card Starts with a 4
 
 class FlippableCard extends StatefulWidget {
-  const FlippableCard({super.key});
-
+  FlippableCard(
+      {super.key,
+      this.cardNumber = "****************",
+      this.name = "NAME",
+      String expirationDate = "MM/YY"});
+  String cardNumber;
+  String name = "NAME";
+  String expirationDate = "MM/YY";
   @override
   State<FlippableCard> createState() => _FlippableCardState();
 }
 
 class _FlippableCardState extends State<FlippableCard> {
-  String cardNumber = "****************";
-  String name = "NAME";
-  String expirationDate = "MM/YY";
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: noInfoCard(
-      context,
-    ));
+        child: frontCard(context, !(widget.cardNumber.substring(1, 1) == "4"),
+            int.parse(widget.cardNumber)));
   }
 }
 
@@ -84,7 +86,8 @@ Widget noInfoCard(BuildContext context) {
   );
 }
 
-Widget frontCard(BuildContext context, bool isVisa, int cardNumber) {
+Widget frontCard(BuildContext context, bool isVisa, int cardNumber,
+    {String name = "Name", String expirationDate = "MM/YY"}) {
   return Container(
     height: 165,
     width: 235,
@@ -150,11 +153,11 @@ Widget frontCard(BuildContext context, bool isVisa, int cardNumber) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "NAME",
+                  name,
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  "MM/YY",
+                  expirationDate,
                   style: TextStyle(
                       fontSize: 12,
                       color: Colors.black38,

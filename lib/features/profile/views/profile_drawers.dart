@@ -3,6 +3,7 @@
 import 'package:aprupa_parichay/app/component/custom_text_field.dart';
 import 'package:aprupa_parichay/app/component/spaces.dart';
 import 'package:aprupa_parichay/features/profile/components/drawers_card.dart';
+import 'package:aprupa_parichay/features/profile/views/profile_info.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -23,23 +24,39 @@ class _ProfileState extends State<Profile> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(120)),
-                    child: Image.asset(
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                        "assets/profile.jpeg")),
+                GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ProfileInfo();
+                    }));
+                  },
+                  child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(120)),
+                      child: Image.asset(
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
+                          "assets/profile.jpeg")),
+                ),
                 Icon(Icons.settings_outlined)
               ],
             ),
           ),
           verticalSpace(10),
-          Text(
-            "Drawers",
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+          InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ProfileInfo();
+              }));
+            },
+            child: Text(
+              "Drawers",
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+            ),
           ),
           verticalSpace(30),
           Row(

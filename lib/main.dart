@@ -6,7 +6,7 @@ import 'package:aprupa_parichay/app.dart';
 import 'package:aprupa_parichay/app/constants/colors.dart';
 import 'package:aprupa_parichay/features/cart/cart.dart';
 import 'package:aprupa_parichay/features/market/views/market.dart';
-import 'package:aprupa_parichay/features/profile/profile.dart';
+import 'package:aprupa_parichay/features/profile/views/profile_drawers.dart';
 import 'package:aprupa_parichay/global_variables.dart';
 import 'package:aprupa_parichay/latest.dart';
 import 'package:flutter/material.dart';

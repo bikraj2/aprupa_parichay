@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:aprupa_parichay/app/component/custom_button.dart';
+import 'package:aprupa_parichay/app/component/custom_text_field.dart';
 import 'package:aprupa_parichay/app/component/spaces.dart';
 import 'package:aprupa_parichay/app/constants/colors.dart';
 import 'package:aprupa_parichay/features/cart/components/credit_card.dart';
@@ -16,6 +17,12 @@ class PaymentDetails extends StatefulWidget {
 }
 
 class _PaymentDetailsState extends State<PaymentDetails> {
+  TextEditingController cardNumber = TextEditingController();
+
+  late String cardNo;
+  String name = "NAME";
+  String expirationDate = "MM/YY";
+  String stage = "NoCardStage";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -181,7 +188,101 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                                     fontSize: 18, fontWeight: FontWeight.w600),
                               ),
                               verticalSpace(20),
-                              FlippableCard()
+                              if (stage == "NoCardStage")
+                                noInfoCard(context)
+                              else if (stage == "NoNameStage")
+                                frontCard(context, false, int.parse(cardNo))
+                              else
+                                backCard(context, false),
+                              verticalSpace(20),
+                              Text(
+                                "Card Number",
+                                style: TextStyle(
+                                    color: primarColor,
+                                    letterSpacing: 0.7,
+                                    fontSize: 17),
+                              ),
+                              SizedBox(
+                                child: TextField(
+                                  controller: cardNumber,
+                                  decoration: InputDecoration(
+                                    hintText: "Type your card number ",
+                                    focusColor: primarColor,
+                                  ),
+                                ),
+                              ),
+                              verticalSpace(20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                      child: Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 15, horizontal: 60),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                  width: 0.6,
+                                                  color: Colors.grey)),
+                                          child: Text(
+                                            "Cancel",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w400),
+                                          ))),
+                                  horizontalSapce(10),
+                                  InkWell(
+                                      onTap: () {
+                                        String tempVar = cardNumber.text;
+                                        if (tempVar.length < 16 ||
+                                            tempVar.length > 16) {
+                                          final snackBar = SnackBar(
+                                            backgroundColor: Colors.red,
+                                            content: const Text(
+                                                'Card Number Must be 16 digits',
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                            action: SnackBarAction(
+                                              label: 'close',
+                                              onPressed: () {
+                                                // Some code to undo the change.
+                                              },
+                                            ),
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackBar);
+                                        } else {
+                                          setState(() {
+                                            stage = "NoNameStage";
+                                            cardNo = tempVar;
+                                          });
+                                        }
+                                      },
+                                      child: Container(
+                                          width: GlobalVariable.width / 2.5,
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 15, horizontal: 30),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: primarColor,
+                                              border: Border.all(
+                                                  width: 0.6,
+                                                  color: Colors.grey)),
+                                          child: Text(
+                                            "Next",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.white),
+                                          ))),
+                                ],
+                              )
                             ]),
                       )
                     ],
