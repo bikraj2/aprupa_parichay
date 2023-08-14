@@ -13,6 +13,9 @@ class CustomButton extends StatelessWidget {
       this.rounded = 12,
       this.borderWidth = 0,
       this.borderColor = Colors.transparent,
+      this.paddingVertical = 10,
+      this.paddingHorizontal = 0,
+      this.textSize = 15,
       required this.onTap});
   double width;
   Color backgroundColor;
@@ -22,13 +25,17 @@ class CustomButton extends StatelessWidget {
   VoidCallback onTap;
   double borderWidth;
   Color borderColor;
+  double paddingVertical;
+  double paddingHorizontal;
+  double textSize;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.symmetric(
+              vertical: paddingVertical, horizontal: paddingHorizontal),
           width: width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(rounded),
@@ -38,7 +45,9 @@ class CustomButton extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-                color: textColor, fontSize: 15, fontWeight: FontWeight.w500),
+                color: textColor,
+                fontSize: textSize,
+                fontWeight: FontWeight.w500),
           )),
     );
   }

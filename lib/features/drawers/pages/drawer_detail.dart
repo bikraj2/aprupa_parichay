@@ -3,11 +3,14 @@
 import 'dart:ui';
 
 import 'package:aprupa_parichay/app/component/custom_icon.dart';
+import 'package:aprupa_parichay/app/component/custom_switch.dart';
+import 'package:aprupa_parichay/app/component/lines.dart';
 import 'package:aprupa_parichay/app/component/spaces.dart';
 import 'package:aprupa_parichay/app/constants/colors.dart';
 import 'package:aprupa_parichay/features/drawers/views/drawer_products.dart';
 import 'package:aprupa_parichay/features/products/views/product_card_feed.dart';
 import 'package:aprupa_parichay/global_variables.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class DrawerDetail extends StatefulWidget {
@@ -21,7 +24,9 @@ class _DrawerDetailState extends State<DrawerDetail>
     with TickerProviderStateMixin {
   late TabController _tabController;
 
-  bool visible = false;
+  bool visible_outfit_idea = false;
+  bool visible_edit_drawer = false;
+
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this);
@@ -81,8 +86,15 @@ class _DrawerDetailState extends State<DrawerDetail>
                                               ),
                                             ),
                                             verticalSpace(20),
-                                            actionCard("Edit Drawer",
-                                                Icons.settings_outlined),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  visible_edit_drawer = true;
+                                                });
+                                              },
+                                              child: actionCard("Edit Drawer",
+                                                  Icons.settings_outlined),
+                                            ),
                                             verticalSpace(10),
                                             actionCard("Reorder Drawer",
                                                 Icons.sort_rounded),
@@ -159,7 +171,7 @@ class _DrawerDetailState extends State<DrawerDetail>
                       InkWell(
                         onTap: () {
                           setState(() {
-                            visible = true;
+                            visible_outfit_idea = true;
                           });
                         },
                         child: Container(
@@ -223,7 +235,7 @@ class _DrawerDetailState extends State<DrawerDetail>
             ),
           ),
           Visibility(
-            visible: visible,
+            visible: visible_outfit_idea,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Container(
@@ -245,7 +257,7 @@ class _DrawerDetailState extends State<DrawerDetail>
                           ),
                           onPressed: () {
                             setState(() {
-                              visible = false;
+                              visible_outfit_idea = false;
                             });
                           },
                         ),
@@ -264,6 +276,194 @@ class _DrawerDetailState extends State<DrawerDetail>
                           TextStyle(fontSize: 26, fontWeight: FontWeight.w600),
                     ),
                     DrawerProducts(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: visible_edit_drawer,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                height: GlobalVariable.height,
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top,
+                    left: 20,
+                    right: 20,
+                    bottom: 20),
+                decoration: BoxDecoration(color: Colors.white),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            size: 27,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              visible_edit_drawer = false;
+                            });
+                          },
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              "Edit Drawer",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 16),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    verticalSpace(20),
+                    verticalSpace(20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Name"),
+                        Text(
+                          "Summer Outfits",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 16),
+                        )
+                      ],
+                    ),
+                    horizontal_line(context, 1),
+                    verticalSpace(20),
+                    horizontal_line(context, 1),
+                    verticalSpace(20),
+                    Column(
+                      children: [
+                        CustomSwitch(
+                          text: 'Secret Board',
+                          desc:
+                              "No one but you can view access to this drawer, even with the custom URL",
+                          switchColor: primarColor,
+                        ),
+                        verticalSpace(20),
+                        CustomSwitch(
+                          text: 'Recommendations on Feed',
+                          desc: "Show products related to this drawer in feed.",
+                          switchColor: primarColor,
+                        )
+                      ],
+                    ),
+                    verticalSpace(40),
+                    horizontal_line(context, 1),
+                    InkWell(
+                      splashFactory: NoSplash.splashFactory,
+                      onTap: () {
+                        showModalBottomSheet(
+                            constraints: BoxConstraints(maxHeight: 300),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            context: context,
+                            builder: (context) {
+                              return DraggableScrollableSheet(
+                                  initialChildSize: 1,
+                                  builder: (_, scrollController) {
+                                    return Container(
+                                      padding: EdgeInsets.all(20),
+                                      child: Column(
+                                        children: [
+                                          verticalSpace(15),
+                                          Center(
+                                            child: Text(
+                                              "Delete drawer?",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          ),
+                                          verticalSpace(20),
+                                          AutoSizeText(
+                                            "By deleting this drawer, you'll lose all the products saved in it. You can't undo this.",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w200,
+                                                letterSpacing: 0.9),
+                                          ),
+                                          verticalSpace(40),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              InkWell(
+                                                  child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 15,
+                                                              horizontal: 45),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
+                                                          border: Border.all(
+                                                              width: 0.6,
+                                                              color:
+                                                                  Colors.grey)),
+                                                      child: Text(
+                                                        "Cancel",
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ))),
+                                              horizontalSapce(10),
+                                              InkWell(
+                                                  child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 15,
+                                                              horizontal: 45),
+                                                      decoration: BoxDecoration(
+                                                        color: primarColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      child: Text(
+                                                        "Delete",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ))),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  });
+                            });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Delete drawer",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 16),
+                            ),
+                            Icon(Icons.delete_outline)
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),

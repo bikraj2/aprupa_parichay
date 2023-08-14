@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:aprupa_parichay/app.dart';
 import 'package:aprupa_parichay/app/constants/colors.dart';
+import 'package:aprupa_parichay/features/auth/views/entry_screen.dart';
 import 'package:aprupa_parichay/features/cart/cart.dart';
 import 'package:aprupa_parichay/features/market/views/market.dart';
 import 'package:aprupa_parichay/features/profile/views/profile_drawers.dart';
@@ -21,11 +22,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    GlobalVariable(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(fontFamily: "HeyWow"),
-      home: MainApp(),
+      home: EntryScreen(),
     );
   }
 }
@@ -42,7 +44,6 @@ class _MainAppState extends State<MainApp> {
   int index = 0;
   @override
   Widget build(BuildContext context) {
-    GlobalVariable(context);
     return Scaffold(
       floatingActionButton: Container(
         decoration: BoxDecoration(

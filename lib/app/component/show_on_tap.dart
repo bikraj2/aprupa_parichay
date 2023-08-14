@@ -45,8 +45,9 @@ class _ShowOnTapState extends State<ShowOnTap> {
                     widget.title,
                     style: TextStyle(
                         fontFamily: "HeyWow",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w300),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 0.8),
                   ),
                   Transform.rotate(angle: pi / 180 * angle, child: widget.icon),
                 ]),

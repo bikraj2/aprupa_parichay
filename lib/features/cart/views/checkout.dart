@@ -43,14 +43,17 @@ class _CheckoutState extends State<Checkout> {
                     },
                     icon: const Icon(Icons.arrow_back_ios)),
                 horizontalSapce(10),
-                CheckoutProgress(activeStep: activeStep),
+                CheckoutProgress(
+                  activeStep: activeStep,
+                  onUpdateStateValue: updateStateValue,
+                ),
               ],
             ),
             verticalSpace(15),
             if (activeStep == 0)
               CheckoutAddress(onUpdateStateValue: updateStateValue)
             else if (activeStep == 1)
-              PaymentDetails()
+              PaymentDetails(onUpdateStateValue: updateStateValue)
             else
               ConfirmOrder()
           ],

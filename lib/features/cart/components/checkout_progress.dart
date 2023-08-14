@@ -8,8 +8,13 @@ class CheckoutProgress extends StatefulWidget {
   CheckoutProgress({
     super.key,
     required this.activeStep,
+    this.firstStep = "",
+    this.secondStep = "",
+    this.thirdStep = "",
+    required this.onUpdateStateValue,
   });
-
+  final Function(int) onUpdateStateValue;
+  String firstStep, secondStep, thirdStep;
   int activeStep;
 
   @override
@@ -50,7 +55,7 @@ class _CheckoutProgressState extends State<CheckoutProgress> {
               ),
             ),
           ),
-          title: 'Address',
+          title: widget.firstStep == "" ? "" : 'Address',
         ),
         EasyStep(
           customStep: CircleAvatar(
@@ -68,7 +73,7 @@ class _CheckoutProgressState extends State<CheckoutProgress> {
               ),
             ),
           ),
-          title: 'Payment Details',
+          title: widget.secondStep == "" ? "" : 'Payment Details',
         ),
         EasyStep(
           customStep: CircleAvatar(
@@ -86,10 +91,12 @@ class _CheckoutProgressState extends State<CheckoutProgress> {
               ),
             ),
           ),
-          title: 'Confirm',
+          title: widget.thirdStep == "" ? "" : 'Confirm',
         ),
       ],
-      onStepReached: (index) => setState(() => widget.activeStep = index),
+      onStepReached: (index) {
+        widget.onUpdateStateValue(index);
+      },
     );
   }
 }

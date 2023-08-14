@@ -10,8 +10,8 @@ import 'package:aprupa_parichay/global_variables.dart';
 import 'package:flutter/material.dart';
 
 class PaymentDetails extends StatefulWidget {
-  const PaymentDetails({super.key});
-
+  PaymentDetails({super.key, required this.onUpdateStateValue});
+  final Function(int) onUpdateStateValue;
   @override
   State<PaymentDetails> createState() => _PaymentDetailsState();
 }
@@ -131,7 +131,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                         onTap: () {},
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 30),
+                              horizontal: 15, vertical: 15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -157,7 +157,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(14)),
                           padding: EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 30),
+                              horizontal: 15, vertical: 15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -176,141 +176,189 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       ),
                     ],
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Add Card",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w600),
-                              ),
-                              verticalSpace(20),
-                              if (stage == "NoCardStage")
-                                noInfoCard(context)
-                              else if (stage == "NoNameStage")
-                                frontCard(context, false, int.parse(cardNo))
-                              else
-                                backCard(context, false),
-                              verticalSpace(20),
-                              Text(
-                                "Card Number",
-                                style: TextStyle(
-                                    color: primarColor,
-                                    letterSpacing: 0.7,
-                                    fontSize: 17),
-                              ),
-                              SizedBox(
-                                child: TextField(
-                                  controller: cardNumber,
-                                  decoration: InputDecoration(
-                                    hintText: "Type your card number ",
-                                    focusColor: primarColor,
-                                  ),
-                                ),
-                              ),
-                              verticalSpace(20),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                      child: Container(
-                                          alignment: Alignment.center,
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 15, horizontal: 60),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              border: Border.all(
-                                                  width: 0.6,
-                                                  color: Colors.grey)),
-                                          child: Text(
-                                            "Cancel",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w400),
-                                          ))),
-                                  horizontalSapce(10),
-                                  InkWell(
-                                      onTap: () {
-                                        String tempVar = cardNumber.text;
-                                        if (tempVar.length < 16 ||
-                                            tempVar.length > 16) {
-                                          final snackBar = SnackBar(
-                                            backgroundColor: Colors.red,
-                                            content: const Text(
-                                                'Card Number Must be 16 digits',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.w500)),
-                                            action: SnackBarAction(
-                                              label: 'close',
-                                              onPressed: () {
-                                                // Some code to undo the change.
-                                              },
-                                            ),
-                                          );
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(snackBar);
-                                        } else {
-                                          setState(() {
-                                            stage = "NoNameStage";
-                                            cardNo = tempVar;
-                                          });
-                                        }
-                                      },
-                                      child: Container(
-                                          width: GlobalVariable.width / 2.5,
-                                          alignment: Alignment.center,
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 15, horizontal: 30),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              color: primarColor,
-                                              border: Border.all(
-                                                  width: 0.6,
-                                                  color: Colors.grey)),
-                                          child: Text(
-                                            "Next",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.white),
-                                          ))),
-                                ],
-                              )
-                            ]),
-                      )
-                    ],
-                  )
+                  // Column(
+                  //   children: [
+                  //     Container(
+                  //       child: Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             Text(
+                  //               "Add Card",
+                  //               style: TextStyle(
+                  //                   fontSize: 18, fontWeight: FontWeight.w600),
+                  //             ),
+                  //             verticalSpace(20),
+                  //             if (stage == "NoCardStage")
+                  //               noInfoCard(context)
+                  //             else if (stage == "NoNameStage")
+                  //               frontCard(context, false, int.parse(cardNo))
+                  //             else
+                  //               backCard(context, false),
+                  //             verticalSpace(20),
+                  //             Text(
+                  //               "Card Number",
+                  //               style: TextStyle(
+                  //                   color: primarColor,
+                  //                   letterSpacing: 0.7,
+                  //                   fontSize: 17),
+                  //             ),
+                  //             SizedBox(
+                  //               child: TextField(
+                  //                 controller: cardNumber,
+                  //                 decoration: InputDecoration(
+                  //                   hintText: "Type your card number ",
+                  //                   focusColor: primarColor,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             verticalSpace(20),
+                  //             Row(
+                  //               mainAxisAlignment: MainAxisAlignment.center,
+                  //               children: [
+                  //                 InkWell(
+                  //                     child: Container(
+                  //                         alignment: Alignment.center,
+                  //                         padding: EdgeInsets.symmetric(
+                  //                             vertical: 15, horizontal: 60),
+                  //                         decoration: BoxDecoration(
+                  //                             borderRadius:
+                  //                                 BorderRadius.circular(12),
+                  //                             border: Border.all(
+                  //                                 width: 0.6,
+                  //                                 color: Colors.grey)),
+                  //                         child: Text(
+                  //                           "Cancel",
+                  //                           style: TextStyle(
+                  //                               fontSize: 18,
+                  //                               fontWeight: FontWeight.w400),
+                  //                         ))),
+                  //                 horizontalSapce(10),
+                  //                 InkWell(
+                  //                     onTap: () {
+                  //                       String tempVar = cardNumber.text;
+                  //                       if (tempVar.length < 16 ||
+                  //                           tempVar.length > 16) {
+                  //                         final snackBar = SnackBar(
+                  //                           backgroundColor: Colors.red,
+                  //                           content: const Text(
+                  //                               'Card Number Must be 16 digits',
+                  //                               style: TextStyle(
+                  //                                   fontSize: 16,
+                  //                                   fontWeight:
+                  //                                       FontWeight.w500)),
+                  //                           action: SnackBarAction(
+                  //                             label: 'close',
+                  //                             onPressed: () {
+                  //                               // Some code to undo the change.
+                  //                             },
+                  //                           ),
+                  //                         );
+                  //                         ScaffoldMessenger.of(context)
+                  //                             .showSnackBar(snackBar);
+                  //                       } else {
+                  //                         setState(() {
+                  //                           stage = "NoNameStage";
+                  //                           cardNo = tempVar;
+                  //                         });
+                  //                       }
+                  //                     },
+                  //                     child: Container(
+                  //                         width: GlobalVariable.width / 2.5,
+                  //                         alignment: Alignment.center,
+                  //                         padding: EdgeInsets.symmetric(
+                  //                             vertical: 15, horizontal: 30),
+                  //                         decoration: BoxDecoration(
+                  //                             borderRadius:
+                  //                                 BorderRadius.circular(12),
+                  //                             color: primarColor,
+                  //                             border: Border.all(
+                  //                                 width: 0.6,
+                  //                                 color: Colors.grey)),
+                  //                         child: Text(
+                  //                           "Next",
+                  //                           style: TextStyle(
+                  //                               fontSize: 18,
+                  //                               fontWeight: FontWeight.w400,
+                  //                               color: Colors.white),
+                  //                         ))),
+                  //               ],
+                  //             )
+                  //           ]),
+                  //     )
+                  //   ],
+                  // )
                 ],
               ),
             ),
           ),
-          // Positioned(
-          //     bottom: 20,
-          //     child: SizedBox(
-          //       width: GlobalVariable.width - 40,
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           Text(
-          //             "Total(VAT Included)",
-          //             style:
-          //                 TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-          //           ),
-          //           Text(
-          //             "\$48",
-          //             style:
-          //                 TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-          //           )
-          //         ],
-          //       ),
-          //     ))
+          Positioned(
+              bottom: 90,
+              child: SizedBox(
+                width: GlobalVariable.width - 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total(VAT Included)",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                    ),
+                    Text(
+                      "\$48",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    )
+                  ],
+                ),
+              )),
+          Positioned(
+              bottom: 10,
+              child: SizedBox(
+                width: GlobalVariable.width - 40,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          widget.onUpdateStateValue(0);
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 45),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                border:
+                                    Border.all(width: 0.6, color: Colors.grey)),
+                            child: Text(
+                              "Back",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w400),
+                            ))),
+                    horizontalSapce(10),
+                    InkWell(
+                        onTap: () {
+                          widget.onUpdateStateValue(2);
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 45),
+                            decoration: BoxDecoration(
+                              color: primarColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              "Next",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400),
+                            ))),
+                  ],
+                ),
+              ))
         ],
       ),
     );

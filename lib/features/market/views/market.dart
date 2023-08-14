@@ -5,6 +5,7 @@ import 'package:aprupa_parichay/app/component/custom_text_field.dart';
 import 'package:aprupa_parichay/features/market/components/market_card.dart';
 import 'package:aprupa_parichay/features/market/views/collection.dart';
 import 'package:aprupa_parichay/features/market/views/featured.dart';
+import 'package:aprupa_parichay/features/order/views/order_overview.dart';
 import 'package:aprupa_parichay/global_variables.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,12 @@ class _MarketState extends State<Market> with TickerProviderStateMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SingleChildScrollView(
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return OrderOverView();
+                }));
+              },
               child: Container(
                 margin: EdgeInsets.only(top: 5),
                 padding: EdgeInsets.only(right: 15, left: 5),
