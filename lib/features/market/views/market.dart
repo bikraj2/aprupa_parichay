@@ -6,6 +6,7 @@ import 'package:aprupa_parichay/features/market/components/market_card.dart';
 import 'package:aprupa_parichay/features/market/views/collection.dart';
 import 'package:aprupa_parichay/features/market/views/featured.dart';
 import 'package:aprupa_parichay/features/order/views/order_overview.dart';
+import 'package:aprupa_parichay/features/stores/app.dart';
 import 'package:aprupa_parichay/global_variables.dart';
 import 'package:flutter/material.dart';
 
@@ -121,7 +122,7 @@ class _MarketState extends State<Market> with TickerProviderStateMixin {
             ),
             TabBar(
               isScrollable: true,
-              indicatorPadding: const EdgeInsets.symmetric(horizontal: 48),
+              indicatorPadding: const EdgeInsets.symmetric(horizontal: 36),
               indicatorColor: Colors.black,
               controller: _tabController,
               tabs: const [
@@ -158,7 +159,7 @@ class _MarketState extends State<Market> with TickerProviderStateMixin {
             Expanded(
                 child: TabBarView(
                     controller: _tabController,
-                    children: [Featured(), Collection()])),
+                    children: [Featured(), Collection(), Store()])),
           ],
         ),
       ),

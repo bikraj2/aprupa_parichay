@@ -8,6 +8,7 @@ import 'package:aprupa_parichay/app/constants/hex_colors.dart';
 import 'package:aprupa_parichay/features/auth/components/placeholder_auth.dart';
 import 'package:aprupa_parichay/features/auth/views/password_changed.dart';
 import 'package:aprupa_parichay/global_variables.dart';
+import 'package:aprupa_parichay/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -364,7 +365,12 @@ class _LoginPageState extends State<LoginPage> {
                             rounded: 10,
                             paddingVertical: 18,
                             width: GlobalVariable.width - 80,
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return MainApp();
+                              }));
+                            },
                             textColor: Colors.white,
                             backgroundColor: primarColor,
                             text: "Login",

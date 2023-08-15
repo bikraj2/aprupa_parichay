@@ -33,6 +33,7 @@ class MarketCard extends StatelessWidget {
                 bottom: 10,
                 left: 10,
                 child: CircleAvatar(
+                  backgroundColor: Colors.white,
                   backgroundImage: AssetImage(logo),
                 ),
               )
